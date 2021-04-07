@@ -6,8 +6,11 @@ __pycache__/
 # C extensions
 *.so
 
+#custom
+media/
 # pycharm .idea
 *.idea
+
 
 # Distribution / packaging
 .Python
