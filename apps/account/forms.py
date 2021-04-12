@@ -6,7 +6,7 @@ from django.forms import EmailField
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
 
-from account.models import MyUser
+from apps.account.models import MyUser
 
 
 class UserCreationForm(forms.ModelForm) :

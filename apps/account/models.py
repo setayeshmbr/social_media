@@ -3,7 +3,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from account.managers import MyUserManager
+from apps.account.managers import MyUserManager
 
 
 class MyUser(AbstractBaseUser) :

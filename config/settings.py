@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my apps
-    'account.apps.AccountConfig',
+    'apps.account.apps.AccountConfig',
     'widget_tweaks',
 ]
 

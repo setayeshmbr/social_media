@@ -1,22 +1,17 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-
 # Create your views here.
 from django.views.generic import CreateView
 
-from account.forms import CustomAuthenticationForm, UserCreationForm
+from apps.account.forms import CustomAuthenticationForm
 
 
 @login_required(login_url='login')
 def home(request):
     return HttpResponse('<h1>Page was found</h1>')
-
-
-def index(request):
-    return HttpResponse('<h1>index was found</h1>')
 
 
 class Login(LoginView):
@@ -44,7 +39,7 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-from .models import MyUser
+from apps.account.models import MyUser
 from django.core.mail import EmailMessage
 
 
