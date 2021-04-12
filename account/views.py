@@ -46,7 +46,7 @@ class Register(CreateView):
 
     def form_valid(self, form) :
         user = form.save()
-        user.is_staff = True
+        user.is_active = True
         user.save()
         return HttpResponseRedirect(reverse(self.success_url))
 

@@ -22,7 +22,7 @@ class MyUserManager(BaseUserManager) :
 
     def create_user(self, email, user_name, password=None, **extra_fields) :
         extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_staff', False)
         user = self._create_user(
             email,
             user_name,

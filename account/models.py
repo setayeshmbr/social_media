@@ -34,6 +34,15 @@ class MyUser(AbstractBaseUser) :
     )
     phone_number = models.CharField(_('Phone number'), max_length=11, blank=True, null=True, unique=True)
 
+    is_active = models.BooleanField(
+        _('active'),
+        default=True,
+        help_text=_(
+            'Designates whether this user should be treated as active. '
+            'Unselect this instead of deleting accounts.'
+        ),
+    )
+
     class Meta :
         verbose_name = _('user')
         verbose_name_plural = _('users')
@@ -59,7 +68,3 @@ class MyUser(AbstractBaseUser) :
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-
-
-
-
