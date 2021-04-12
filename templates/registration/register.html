@@ -1,0 +1,74 @@
+{% extends 'registration/login_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block main %}
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form-title"
+                     style="background-image: url({% static 'registration/login/images/bg-01.jpg' %});">
+					<span class="login100-form-title-1">
+						Sign In
+					</span>
+                </div>
+                <form method="post" class="login100-form validate-form">{% csrf_token %}
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Email</span>
+                        {% render_field form.email|add_class:"input100" type="text" name="email" placeholder="Enter email" %}
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Username</span>
+                        {% render_field form.user_name|add_class:"input100" type="text" name="username" placeholder="Enter username" %}
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
+                        <span class="label-input100">Phone number</span>
+                        {% render_field form.phone_number|add_class:"input100" type="text" name="phone number" placeholder="Enter phone number" %}
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        {% render_field form.password1|add_class:"input100" type="password" name="pass" placeholder="Enter password" %}
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+                        <span class="label-input100">Confirm Password</span>
+                        {% render_field form.password2|add_class:"input100" type="password" name="pass" placeholder="Enter password again" %}
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div class="flex-sb-m w-full p-b-30">
+                        <div class="contact100-form-checkbox">
+                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                            <label class="label-checkbox100" for="ckb1">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div>
+                            <a href="#" class="txt1">
+                                Forgot Password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Login
+                        </button>
+                    </div>
+                </form>
+                {% if form.non_field_errors %}
+                    <div class="errors">
+                        {% for errors in form.non_field_errors %}
+                            <span>{{ errors }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
