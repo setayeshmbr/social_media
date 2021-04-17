@@ -67,7 +67,8 @@ class MyUser(AbstractBaseUser):
         ),
     )
 
-
+    otp = models.PositiveIntegerField(blank=True,null=True)
+    otp_create_time = models.DateTimeField(auto_now=True)
 
 
     class Meta:

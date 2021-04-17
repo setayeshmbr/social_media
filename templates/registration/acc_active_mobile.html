@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="." method="post">{% csrf_token %}
+    <label for="mobile">Mobile :</label>
+    <input type="text" name="otp" readonly value="{{ mobile_number }}">
+    <label for="otp">OTP: </label>
+    <input type="number" name="otp">
+    <input type="submit"  value="check otp">
+
+</form>
+
+</body>
+</html>

@@ -42,35 +42,47 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
-
+from . import helper
 
 class Register(CreateView):
     form_class = UserCreationForm
     template_name = 'registration/register.html'
-    success_url = 'account:index'
+    success_url = 'verify'
 
     def form_valid(self, form):
         user = form.save(commit=False)
         user.is_active = True
-        user.save()
+
         current_site = get_current_site(self.request)
+        authenticate_status = user.authenticate_with
+        if authenticate_status == 'p':
+            # send otp
+            otp = helper.get_random_otp()
+            helper.send_otp(user.phone_number , otp)
+            # save otp
+            user.otp = otp
+            user.save()
+            self.request.session['user_mobile'] = user.phone_number
+            return HttpResponseRedirect(reverse(self.success_url))
+
+        elif authenticate_status =='e':
+            user.save()
+            # sending email
+            mail_subject = 'Activate your account.'
+            message = render_to_string('registration/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
 
 
-
-        # sending email
-        mail_subject = 'Activate your account.'
-        message = render_to_string('registration/acc_active_email.html', {
-            'user': user,
-            'domain': current_site.domain,
-            'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-            'token': account_activation_token.make_token(user),
-        })
-        to_email = form.cleaned_data.get('email')
-        email = EmailMessage(
-            mail_subject, message, to=[to_email]
-        )
-        email.send()
-        return HttpResponse('Please confirm your email address to complete the registration')
 
 
 def activate(request, uidb64, token):
@@ -92,3 +104,17 @@ def activate(request, uidb64, token):
 
 
 
+def verify(request):
+    try :
+        mobile_number = request.session.get('user_mobile')
+        user = get_object_or_404(MyUser, phone_number = mobile_number)
+
+        if request.method =="POST":
+            if user.otp != int(request.POST.get('otp')):
+                return HttpResponseRedirect(reverse('Register'))
+            user.is_active = True
+            return HttpResponse(
+                'Thank you for your confirmation. Now you can <a href="/login">login</a> your account.')
+        return render(request, 'registration/acc_active_mobile.html', {'mobile_number' : mobile_number})
+    except:
+        return HttpResponseRedirect(reverse('Register'))

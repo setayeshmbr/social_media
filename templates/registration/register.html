@@ -6,8 +6,14 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
-                <form method="post" class="login100-form validate-form">{% csrf_token %}
+                <div class="login100-form-title"
+                     style="background-image: url({% static 'registration/login/images/bg-01.jpg' %});">
+					<span class="login100-form-title-1">
+						Sign up
+					</span>
+                </div>
 
+                <form method="post" class="login100-form validate-form">{% csrf_token %}
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Email is required">
                         <span class="label-input100">Email</span>
                         {% render_field form.email|add_class:"input100" type="text" name="email" placeholder="Enter email" %}
@@ -109,12 +115,6 @@
                         </button>
                     </div>
                 </form>
-                <div class="login100-form-title"
-                     style="background-image: url({% static 'registration/login/images/bg-01.jpg' %});">
-					<span class="login100-form-title-1">
-						Sign In
-					</span>
-                </div>
                 {% if form.non_field_errors %}
                     <div class="errors">
                         {% for errors in form.non_field_errors %}
