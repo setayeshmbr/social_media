@@ -2,11 +2,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 # Create your views here.
 from django.views.generic import CreateView
 
 from apps.account.forms import CustomAuthenticationForm
+from .models import MyUser
 
 
 @login_required(login_url='login')
@@ -39,7 +41,6 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-from apps.account.models import MyUser
 from django.core.mail import EmailMessage
 
 
@@ -53,6 +54,8 @@ class Register(CreateView):
         user.is_active = True
         user.save()
         current_site = get_current_site(self.request)
+
+
 
         # sending email
         mail_subject = 'Activate your account.'
@@ -86,3 +89,6 @@ def activate(request, uidb64, token):
 
     else:
         return HttpResponse('Activation link is invalid! <a href ="/register">Try again</a>')
+
+
+

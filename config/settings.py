@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # my apps
     'apps.account.apps.AccountConfig',
     'widget_tweaks',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Media files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
