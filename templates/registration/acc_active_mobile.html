@@ -1,3 +1,39 @@
+{% extends 'registration/login_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block main %}
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form-title"
+                     style="background-image: url({% static 'registration/login/images/bg-01.jpg' %});">
+					<span class="login100-form-title-1">
+						OTP
+					</span>
+                </div>
+                <form method="post" class="login100-form validate-form">{% csrf_token %}
+                    <div class="wrap-input100 validate-input m-b-26">
+                        <span class="label-input100">Mobile :</span>
+                        <input class="input100" type="text" name="otp" readonly value="{{ mobile_number }}">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input m-b-26">
+                        <span class="label-input100">OTP: </span>
+                        <input class="input100" type="number" name="otp">
+                        <span class="focus-input100"></span>
+                    </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Check OTP
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +46,7 @@
     <input type="text" name="otp" readonly value="{{ mobile_number }}">
     <label for="otp">OTP: </label>
     <input type="number" name="otp">
-    <input type="submit"  value="check otp">
+    <input type="submit" value="check otp">
 
 </form>
 

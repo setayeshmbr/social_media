@@ -58,7 +58,7 @@ class Register(CreateView):
         if authenticate_status == 'p':
             # send otp
             otp = helper.get_random_otp()
-            helper.send_otp(user.phone_number , otp)
+            # helper.send_otp(user.phone_number , otp)
             # save otp
             user.otp = otp
             user.save()
@@ -111,10 +111,10 @@ def verify(request):
 
         if request.method =="POST":
             if user.otp != int(request.POST.get('otp')):
-                return HttpResponseRedirect(reverse('Register'))
+                return HttpResponseRedirect(reverse('register'))
             user.is_active = True
             return HttpResponse(
                 'Thank you for your confirmation. Now you can <a href="/login">login</a> your account.')
         return render(request, 'registration/acc_active_mobile.html', {'mobile_number' : mobile_number})
     except:
-        return HttpResponseRedirect(reverse('Register'))
+        return HttpResponseRedirect(reverse('register'))
