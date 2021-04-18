@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # my apps
     'apps.account.apps.AccountConfig',
+    'apps.blog.apps.BlogConfig',
     'widget_tweaks',
     'rest_framework'
 ]
