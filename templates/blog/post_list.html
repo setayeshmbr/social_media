@@ -13,27 +13,20 @@
                     <div class="col-md-7">
                         <div class="row mb-5">
                             <div class="col-12 ">
-                                <h2 class="site-section-heading text-center">Portrait Gallery</h2>
+                                <h2 class="site-section-heading text-center">my photos</h2>
                             </div>
                         </div>
                     </div>
 
                 </div>
                 <div class="row" id="lightgallery">
-                    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 item" data-aos="fade"
-                         data-src="{% static 'blog/images/big-images/nature_big_1.jpg' %}"
-                         data-sub-html="<h4>Fading Light</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor doloremque hic excepturi fugit, sunt impedit fuga tempora, ad amet aliquid?</p>">
-                        <a href="#"><img src="{% static 'blog/images/nature_small_1.jpg' %}" alt="IMage"
-                                         class="img-fluid"></a>
-                    </div>
                     {% for post in object_list %}
                         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 item" data-aos="fade"
                              data-src="{{ post.image.url }}"
-                             data-sub-html="<h4>Fading Light</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam omnis quaerat molestiae, praesentium. Ipsam, reiciendis. Aut molestiae animi earum laudantium.</p>">
-                            <a href="#"><img src="{{ post.thumbnail_url }}" alt="IMage"
-{#                            <a href="#"><img src="{{ post.image.url }}" alt="IMage"#}
-                                             class="img-fluid"></a>
+                             data-sub-html="<h4>Fading Light</h4><p>{{ post.caption }}</p>">
+                            <a href="{% url 'blog:post_detail' post.pk %}"><img src="{{ post.thumbnail_url }}" alt="IMage" class="img-fluid"></a>
                         </div>
+
                     {% endfor %}
                 </div>
             </div>

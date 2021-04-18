@@ -1,20 +1,34 @@
-from django.contrib.auth.decorators import login_required
-
 # Create your views here.
-from django.shortcuts import render
-from django.views.generic import ListView
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView, DetailView
 
-from apps.blog.models import Post
+from apps.blog.models import Post, Category
 
 
 class PostList(ListView):
     model = Post
-    template_name = 'blog/single.html'
+    template_name = 'blog/post_list.html'
+
+class PostDetail(DetailView):
+    def get_object(self, queryset=None) :
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Post.objects.all(), pk=pk)
 
 
+class CategoryList(ListView):
+    model = Category
+    template_name = 'blog/category_list.html'
 
-# def profile(request):
-#     context = {
-#         'message': "hello woooorld"
-#     }
-#     return render(request, 'blog/index.html', context)
+
+class CategoryDetail(ListView):
+    template_name = 'blog/category_detail.html'
+    def get_queryset(self):
+        global category
+        slug = self.kwargs.get('slug')
+        category = get_object_or_404(Category, slug = slug)
+        return category.posts.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(CategoryDetail, self).get_context_data( **kwargs)
+        context['category'] = category
+        return context
