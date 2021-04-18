@@ -1,9 +1,19 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render
 
 # Create your views here.
+from django.shortcuts import render
+
 
 @login_required(login_url='login')
 def home(request):
-    return HttpResponse('<h1>Page was found</h1>')
+    context = {
+        'message': "hello woooorld"
+    }
+    return render(request, 'blog/single.html', context)
+
+
+# def profile(request):
+#     context = {
+#         'message': "hello woooorld"
+#     }
+#     return render(request, 'blog/index.html', context)
