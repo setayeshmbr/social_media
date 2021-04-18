@@ -5,9 +5,9 @@ from django.views.generic import ListView, DetailView
 from apps.blog.models import Post, Category
 
 
-class PostList(ListView):
-    model = Post
-    template_name = 'blog/post_list.html'
+# class PostList(ListView):
+#     model = Post
+#     template_name = 'blog/post_list.html'
 
 class PostDetail(DetailView):
     def get_object(self, queryset=None) :

@@ -26,12 +26,12 @@
                                 <li><a href="#">Nature</a></li>
                             </ul>
                         </li>
-                        <li class="has-children ">
-                            <a href="{% url 'blog:post_list' %}">MyPhotos</a>
+                        <li>
+                            <a href="{% url 'account:post_list' %}">MyPhotos</a>
                         </li>
-                        <li><a href="services.html">Services</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+{#                        <li><a href="#">Services</a></li>#}
+                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">New Post</a></li>
                     </ul>
                 </nav>
             </div>
@@ -41,17 +41,12 @@
                     <ul class="site-menu js-clone-nav ml-auto list-unstyled d-flex text-right mb-0"
                         data-class="social">
                         <li>
-                            <a href="#" class="pl-0 pr-3"><span class="icon-facebook"></span></a>
+                            <a href="{% url 'login' %}" class="pl-3 pr-3"><span class="icon-sign-in"></span></a>
                         </li>
                         <li>
-                            <a href="#" class="pl-3 pr-3"><span class="icon-twitter"></span></a>
+                            <a href="{% url 'logout' %}" class="pl-0 pr-3"><span class="icon-sign-out"></span></a>
                         </li>
-                        <li>
-                            <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>
-                        </li>
-                        <li>
-                            <a href="#" class="pl-3 pr-3"><span class="icon-youtube-play"></span></a>
-                        </li>
+
                     </ul>
                 </div>
 

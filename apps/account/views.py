@@ -4,16 +4,17 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 # Create your views here.
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 
 from apps.account.forms import CustomAuthenticationForm
 from .models import MyUser
+from ..blog.models import Post
 
 
 class Login(LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'registration/login.html'
-    success_url = 'blog:home'
+    success_url = 'account:post_list'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
@@ -110,3 +111,11 @@ def verify(request):
         return render(request, 'registration/acc_active_mobile.html', {'mobile_number': mobile_number})
     except:
         return HttpResponseRedirect(reverse('register'))
+
+
+class PostList(ListView) :
+    model = Post
+    template_name = 'blog/post_list.html'
+
+    def get_queryset(self) :
+        return self.request.user.posts.all()

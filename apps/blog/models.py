@@ -46,8 +46,8 @@ class Post(models.Model):
         ('p', _('Publish')),  # Publish
 
     )
-    status = models.CharField(_('Publish status'),max_length=2, choices=STATUS_CHOICES)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    status = models.CharField(_('Publish status'),max_length=2, choices=STATUS_CHOICES ,blank=True, default='p')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,related_name='posts', null=True)
     category = models.ManyToManyField(Category,verbose_name=_('Category'),related_name='posts',blank=True,null=True)
 
     def img_tag(self):
