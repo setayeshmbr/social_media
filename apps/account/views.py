@@ -1,8 +1,7 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 # Create your views here.
 from django.views.generic import CreateView
@@ -11,15 +10,10 @@ from apps.account.forms import CustomAuthenticationForm
 from .models import MyUser
 
 
-@login_required(login_url='login')
-def home(request):
-    return HttpResponse('<h1>Page was found</h1>')
-
-
 class Login(LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'registration/login.html'
-    success_url = 'account:home'
+    success_url = 'blog:home'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
@@ -44,6 +38,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from . import helper
 
+
 class Register(CreateView):
     form_class = UserCreationForm
     template_name = 'registration/register.html'
@@ -65,7 +60,7 @@ class Register(CreateView):
             self.request.session['user_mobile'] = user.phone_number
             return HttpResponseRedirect(reverse(self.success_url))
 
-        elif authenticate_status =='e':
+        elif authenticate_status == 'e':
             user.save()
             # sending email
             mail_subject = 'Activate your account.'
@@ -81,8 +76,6 @@ class Register(CreateView):
             )
             email.send()
             return HttpResponse('Please confirm your email address to complete the registration')
-
-
 
 
 def activate(request, uidb64, token):
@@ -103,18 +96,17 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid! <a href ="/register">Try again</a>')
 
 
-
 def verify(request):
-    try :
+    try:
         mobile_number = request.session.get('user_mobile')
-        user = get_object_or_404(MyUser, phone_number = mobile_number)
+        user = get_object_or_404(MyUser, phone_number=mobile_number)
 
-        if request.method =="POST":
+        if request.method == "POST":
             if user.otp != int(request.POST.get('otp')):
                 return HttpResponseRedirect(reverse('register'))
             user.is_active = True
             return HttpResponse(
                 'Thank you for your confirmation. Now you can <a href="/login">login</a> your account.')
-        return render(request, 'registration/acc_active_mobile.html', {'mobile_number' : mobile_number})
+        return render(request, 'registration/acc_active_mobile.html', {'mobile_number': mobile_number})
     except:
         return HttpResponseRedirect(reverse('register'))

@@ -26,6 +26,7 @@ urlpatterns = [
     path('verify/', verify, name='verify'),
 
     path('', include('apps.account.urls')),
+    path('', include('apps.blog.urls')),
     path('', include('django.contrib.auth.urls')),
 ]
 
