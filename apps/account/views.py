@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 # Create your views here.
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from apps.account.forms import CustomAuthenticationForm
 from .mixins import FormValidMixin, FieldsMixin
@@ -122,12 +122,18 @@ class PostList(ListView):
         return self.request.user.posts.all()
 
 
-class PostCreate(FieldsMixin,FormValidMixin,CreateView):
+class PostCreate(FieldsMixin, FormValidMixin, CreateView):
     model = Post
     template_name = 'blog/post_create_update.html'
     success_url = reverse_lazy('account:post_list')
 
 
-
-
-
+# class PostUpdate(FieldsMixin, FormValidMixin, UpdateView):
+#     model = Post
+#     template_name = 'blog/post_create_update.html'
+#
+#
+# class PostDelete(DeleteView):
+#     model = Post
+#     success_url = reverse_lazy('account:home')
+#     template_name = 'blog/post_create_update.html'

@@ -51,6 +51,13 @@
 
                                 </div>
                             </div>
+                            {% if form.caption.errors %}
+                                {% for error in form.caption.errors %}
+                                    <div class="row-form-errors">
+                                        <p>{{ error }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
                             <div class="row form-group">
                                 <div class="col-md-12">
                                     <label class="text-white" for="caption">Status</label>
