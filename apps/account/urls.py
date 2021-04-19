@@ -7,6 +7,6 @@ from apps.account.views import PostList, PostCreate
 
 app_name = 'account'
 urlpatterns = [
-    path('post_list', PostList.as_view(), name='post_list'),
+    path('<str:user_name>/', PostList.as_view(), name='profile'),
     path('post_create', PostCreate.as_view(), name='post_create_update'),
 ]

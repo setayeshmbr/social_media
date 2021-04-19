@@ -15,7 +15,7 @@ from ..blog.models import Post
 class Login(LoginView):
     form_class = CustomAuthenticationForm
     template_name = 'registration/login.html'
-    success_url = 'account:post_list'
+    success_url = 'account:profile'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
@@ -25,7 +25,7 @@ class Login(LoginView):
         # Check here if the user is an admin
         if user is not None and user.is_active:
             login(self.request, user)
-            return HttpResponseRedirect(reverse(self.success_url))
+            return HttpResponseRedirect(reverse(self.success_url,kwargs={"user_name": user.user_name}))
         else:
             return self.form_invalid(form)
 
@@ -125,8 +125,11 @@ class PostList(ListView):
 class PostCreate(FieldsMixin, FormValidMixin, CreateView):
     model = Post
     template_name = 'blog/post_create_update.html'
-    success_url = reverse_lazy('account:post_list')
 
+    def get_success_url(self):
+        user = self.request.user
+        user_name = user.user_name
+        return reverse_lazy('account:profile', kwargs={"user_name": user_name})
 
 # class PostUpdate(FieldsMixin, FormValidMixin, UpdateView):
 #     model = Post
