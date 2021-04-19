@@ -1,0 +1,111 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% load crispy_forms_filters %}
+{% block main %}
+    <div class="site-wrap">
+        {% include 'blog/navbar.html' %}
+
+        <div class="site-section" data-aos="fade">
+            <div class="container">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-7">
+                        <div class="row mb-5">
+                            <div class="col-12 ">
+                                <h2 class="site-section-heading text-center">New Post</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8 mb-5">
+                        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-white" for="subject">Subject</label>
+                                    {% render_field form.title|add_class:"form-control font-italic" type="text" %}
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <label class="text-white" for="image">Image</label>
+                                    {% render_field form.image|add_class:"form-control font-italic" %}
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-white" for="caption">location</label>
+                                    {% render_field form.location|add_class:"form-control font-italic" %}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label class="text-white" for="caption">Caption</label>
+                                    {% render_field form.caption|add_class:"form-control font-italic" name="message" id="message" cols="30" rows="7" placeholder="Write a caption..." %}
+
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label class="text-white" for="caption">Status</label>
+                                    {% render_field form.status|add_class:"form-control font-italic" %}
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <button class="btn btn-primary py-2 px-4 text-white">Send Message</button>
+                                </div>
+                            </div>
+
+                            {% if form.non_field_errors %}
+                                <div>
+                                    {% for errors in form.non_field_errors %}
+                                        <span>{{ errors }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="col-lg-3 ml-auto">
+                        <div class="mb-3">
+                            <p class="mb-0 font-weight-bold text-white">Address</p>
+                            <p class="mb-4">203 Fake St. Mountain View, San Francisco, California, USA</p>
+
+                            <p class="mb-0 font-weight-bold text-white">Phone</p>
+                            <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
+
+                            <p class="mb-0 font-weight-bold text-white">Email Address</p>
+                            <p class="mb-0"><a href="#">youremail@domain.com</a></p>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer py-4">
+            <div class="container-fluid text-center">
+                <p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script data-cfasync="false"
+                                            src="{% static 'blog//cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+                    <script>document.write(new Date().getFullYear());</script>
+                    All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
+                    <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

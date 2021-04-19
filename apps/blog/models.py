@@ -37,8 +37,8 @@ class Post(models.Model):
     image = models.ImageField(_('Image'), upload_to='uploaded_images')
     # size is "width x height"
     cropping = ImageRatioField('image', '900 x 750',size_warning=True)
-    caption = models.CharField(_('Caption'),max_length=1024, blank=True)
-    location = models.TextField(_('Location'), blank=True)
+    caption = models.TextField(_('Caption'),max_length=1024, blank=True)
+    location = models.CharField(_('Location'), blank=True,max_length=250)
     created = models.DateTimeField(auto_now_add= True)
     updated = models.DateTimeField(auto_now= True)
     STATUS_CHOICES = (
@@ -58,7 +58,7 @@ class Post(models.Model):
         thumbnail_url = get_backend().get_thumbnail_url(
             self.image,
             {
-                'size': (430, 360),
+                'size': (900, 750),
                 'box': self.cropping,
                 'crop': True,
                 'detail': True,

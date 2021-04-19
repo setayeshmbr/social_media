@@ -1,13 +1,10 @@
 # Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, DetailView
 
 from apps.blog.models import Post, Category
 
-
-# class PostList(ListView):
-#     model = Post
-#     template_name = 'blog/post_list.html'
 
 class PostDetail(DetailView):
     def get_object(self, queryset=None) :
@@ -15,7 +12,7 @@ class PostDetail(DetailView):
         return get_object_or_404(Post.objects.all(), pk=pk)
 
 
-class CategoryList(ListView):
+class CategoryList(LoginRequiredMixin,ListView):
     model = Category
     template_name = 'blog/category_list.html'
 

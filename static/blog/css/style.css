@@ -1,3 +1,8 @@
+/* custom */
+.form-control>option{
+  color: black;
+}
+
 /* Base */
 body {
   line-height: 1.7;

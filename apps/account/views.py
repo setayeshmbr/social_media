@@ -1,12 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse, reverse_lazy
 # Create your views here.
 from django.views.generic import CreateView, ListView
 
 from apps.account.forms import CustomAuthenticationForm
+from .mixins import FormValidMixin, FieldsMixin
 from .models import MyUser
 from ..blog.models import Post
 
@@ -113,9 +114,20 @@ def verify(request):
         return HttpResponseRedirect(reverse('register'))
 
 
-class PostList(ListView) :
+class PostList(ListView):
     model = Post
     template_name = 'blog/post_list.html'
 
-    def get_queryset(self) :
+    def get_queryset(self):
         return self.request.user.posts.all()
+
+
+class PostCreate(FieldsMixin,FormValidMixin,CreateView):
+    model = Post
+    template_name = 'blog/post_create_update.html'
+    success_url = reverse_lazy('account:post_list')
+
+
+
+
+
