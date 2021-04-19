@@ -39,18 +39,17 @@ class MyUser(AbstractBaseUser):
             'unique': _("A user with that mobile number already exists."),
         },
     )
-    image = models.ImageField(_('Image'), upload_to='profile_photo', blank=True, null=True)
+    image = models.ImageField(_('Image'), upload_to='profile_photo', blank=True, null=True,
+                              default='profile_photo/default_profile.png')
     GENDER = [('f', _('Female')), ('m', _('Male'))]
     gender = models.CharField(_('Gender'), max_length=2, choices=GENDER, blank=True, null=True)
-    website = models.CharField(_('Website'), blank=True, max_length=150,validators=[validate_website_url])
+    website = models.CharField(_('Website'), blank=True, max_length=150, validators=[validate_website_url])
 
-
-    STATUS_CHOICES =(
+    STATUS_CHOICES = (
         ('p', _('Phone number')),
-        ('e' ,_('Email'))
+        ('e', _('Email'))
     )
-    authenticate_with =models.CharField(choices=STATUS_CHOICES , max_length=1)
-
+    authenticate_with = models.CharField(choices=STATUS_CHOICES, max_length=1)
 
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(
@@ -67,9 +66,8 @@ class MyUser(AbstractBaseUser):
         ),
     )
 
-    otp = models.PositiveIntegerField(blank=True,null=True)
+    otp = models.PositiveIntegerField(blank=True, null=True)
     otp_create_time = models.DateTimeField(auto_now=True)
-
 
     class Meta:
         verbose_name = _('user')
@@ -96,7 +94,6 @@ class MyUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-
 
 # class PhoneModel(models.Model):
 #     Mobile = models.IntegerField(blank=False)

@@ -116,7 +116,7 @@ def verify(request):
 
 class PostList(ListView):
     model = Post
-    template_name = 'blog/post_list.html'
+    template_name = 'blog/profile.html'
 
     def get_queryset(self):
         return self.request.user.posts.all()
