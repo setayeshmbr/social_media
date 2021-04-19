@@ -2,6 +2,9 @@
 .form-control>option{
   color: black;
 }
+.icon-menu:before {
+  color: white!important;
+}
 
 /* Base */
 body {
