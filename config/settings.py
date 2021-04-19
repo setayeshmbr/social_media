@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'easy_thumbnails',
     'image_cropping',
-    'crispy_forms',
 ]
 
 from easy_thumbnails.conf import Settings as thumbnail_settings
