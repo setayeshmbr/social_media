@@ -133,9 +133,7 @@ class ProfileUpdateForm(forms.ModelForm) :
         user = kwargs.pop('user')
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
 
-        if not user.is_superuser :
-            self.fields['user_name'].disabled = True
-            self.fields['email'].disabled = False
+        self.fields['bio'].strip = False
 
     class Meta :
         model = MyUser

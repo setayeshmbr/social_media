@@ -26,7 +26,7 @@ class Login(LoginView):
         # Check here if the user is an admin
         if user is not None and user.is_active:
             login(self.request, user)
-            return HttpResponseRedirect(reverse(self.success_url,kwargs={"user_name": user.user_name}))
+            return HttpResponseRedirect(reverse(self.success_url, kwargs={"user_name": user.user_name}))
         else:
             return self.form_invalid(form)
 
@@ -122,12 +122,11 @@ class Profile(ListView):
     def get_queryset(self):
         global user
         user_name = self.kwargs.get('user_name')
-        user = get_object_or_404(MyUser, user_name = user_name)
+        user = get_object_or_404(MyUser, user_name=user_name)
         return user.posts.all()
 
-
     def get_context_data(self, **kwargs):
-        context = super(Profile,self).get_context_data(**kwargs)
+        context = super(Profile, self).get_context_data(**kwargs)
         context['user'] = user
         return context
 
@@ -142,7 +141,7 @@ class PostCreate(FieldsMixin, FormValidMixin, CreateView):
         return reverse_lazy('account:profile', kwargs={"user_name": user_name})
 
 
-class ProfileUpdate(LoginRequiredMixin,UpdateView):
+class ProfileUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'registration/profile_update.html'
     form_class = ProfileUpdateForm
 
@@ -159,6 +158,5 @@ class ProfileUpdate(LoginRequiredMixin,UpdateView):
         return kwargs
 
     def get_success_url(self):
-        user_name = self.request.user.username
+        user_name = self.object.user_name
         return reverse_lazy('account:profile', kwargs={'user_name': user_name})
-

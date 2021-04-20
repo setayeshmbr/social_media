@@ -13,9 +13,7 @@
             </div>
             <div class="col-md-6 col-lg-6 col-xl-4 text-center mb-5">
                 <h2 class="text-white font-weight-light mb-4">{{ user.user_name }}</h2>
-                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur ab quas facilis
-                    obcaecati non ea, est odit repellat distinctio incidunt, quia aliquam eveniet quod deleniti impedit
-                    sapiente atque tenetur porro?</p>
+                <p class="mb-4">{{ user.bio |safe|striptags }}</p>
                 {% if user == request.user %}
                     <a href="{% url 'account:profile-update' %}" class="btn btn-outline-white py-2 px-4">Edit
                         Profile</a>

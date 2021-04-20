@@ -22,7 +22,7 @@
                     <div class="col-md-7">
                         <div class="row mb-5">
                             <div class="col-12 ">
-                                <h2 class="site-section-heading text-center">Update Profile</h2>
+                                <h2 class="site-section-heading text-center">Edit Profile</h2>
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
 
                 <div class="row">
                     <div class="col-lg-8 mb-5">
-                        <form action="#" enctype="multipart/form-data" >{% csrf_token %}
+                        <form method="post" enctype="multipart/form-data">{% csrf_token %}
 
 
                             <div class="row form-group">
@@ -55,7 +55,15 @@
                                     <label class="text-white" for="lname">Email</label>
                                     {% render_field form.email|add_class:"form-control font-italic" %}
                                 </div>
+                                {% if form.email.errors %}
+                                    <div >
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
+
 
                             <div class="row form-group">
                                 <div class="col-md-6 mb-3 mb-md-0">
@@ -86,7 +94,7 @@
 
                                 </div>
                             </div>
-                           <div class="row form-group">
+                            <div class="row form-group">
                                 <div class="col-md-12">
                                     <label class="text-white" for="fname">Bio</label>
                                     {% render_field form.bio|add_class:"form-control font-italic" %}
@@ -97,10 +105,17 @@
 
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <input type="submit" value="Send Message"
+                                    <input type="submit" value="Edit"
                                            class="btn btn-primary py-2 px-4 text-white">
                                 </div>
                             </div>
+                            {% if form.non_field_errors %}
+                                <div>
+                                    {% for error in form.non_field_errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
 
 
                         </form>
