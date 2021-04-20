@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -141,13 +142,12 @@ class PostCreate(FieldsMixin, FormValidMixin, CreateView):
         return reverse_lazy('account:profile', kwargs={"user_name": user_name})
 
 
-class ProfileUpdate(UpdateView):
+class ProfileUpdate(LoginRequiredMixin,UpdateView):
     template_name = 'registration/profile_update.html'
     form_class = ProfileUpdateForm
 
     def get_object(self, queryset=None):
-        user_name = self.kwargs.get('user_name')
-        return MyUser.objects.get(user_name=user_name)
+        return MyUser.objects.get(pk=self.request.user.pk)
 
     def get_form_kwargs(self):
         kwargs = super(ProfileUpdate, self).get_form_kwargs()
@@ -159,7 +159,6 @@ class ProfileUpdate(UpdateView):
         return kwargs
 
     def get_success_url(self):
-        user = self.request.user
-        user_name = user.user_name
+        user_name = self.request.user.username
         return reverse_lazy('account:profile', kwargs={'user_name': user_name})
 
