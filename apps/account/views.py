@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 # Create your views here.
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView
 
 from apps.account.forms import CustomAuthenticationForm
 from .mixins import FormValidMixin, FieldsMixin
@@ -119,7 +119,16 @@ class PostList(ListView):
     template_name = 'blog/profile.html'
 
     def get_queryset(self):
-        return self.request.user.posts.all()
+        global user
+        user_name = self.kwargs.get('user_name')
+        user = get_object_or_404(MyUser, user_name = user_name)
+        return user.posts.all()
+
+
+    def get_context_data(self, **kwargs):
+        context = super(PostList,self).get_context_data(**kwargs)
+        context['user'] = user
+        return context
 
 
 class PostCreate(FieldsMixin, FormValidMixin, CreateView):
@@ -131,12 +140,6 @@ class PostCreate(FieldsMixin, FormValidMixin, CreateView):
         user_name = user.user_name
         return reverse_lazy('account:profile', kwargs={"user_name": user_name})
 
-# class PostUpdate(FieldsMixin, FormValidMixin, UpdateView):
-#     model = Post
-#     template_name = 'blog/post_create_update.html'
-#
-#
-# class PostDelete(DeleteView):
-#     model = Post
-#     success_url = reverse_lazy('account:home')
-#     template_name = 'blog/post_create_update.html'
+
+
+

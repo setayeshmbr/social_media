@@ -16,7 +16,11 @@
                 <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur ab quas facilis
                     obcaecati non ea, est odit repellat distinctio incidunt, quia aliquam eveniet quod deleniti impedit
                     sapiente atque tenetur porro?</p>
-                <a href="#" class="btn btn-outline-white py-2 px-4">Edit Profile</a>
+                {% if user == request.user %}
+                    <a href="#" class="btn btn-outline-white py-2 px-4">Edit
+                        Profile</a>
+
+                {% endif %}
                 <p class="pt-3">
                     <a href="#" class="pl-0 pr-3"><span class="icon-twitter"></span></a>
                     <a href="#" class="pl-3 pr-3"><span class="icon-instagram"></span></a>

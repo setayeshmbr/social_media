@@ -27,7 +27,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="{% url 'account:profile' user.user_name %}">Profile</a>
+                            <a href="{% url 'account:profile' request.user.user_name  %}">Profile</a>
                         </li>
 {#                        <li><a href="#">Services</a></li>#}
 {#                        <li><a href="#">Profile</a></li>#}

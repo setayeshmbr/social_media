@@ -1,3 +1,6 @@
+from django.shortcuts import redirect
+
+
 class FieldsMixin():
     def dispatch(self, request, *args, **kwargs):
         self.fields = ['title', 'image', 'caption', 'location', 'status', 'category']
@@ -13,3 +16,4 @@ class FormValidMixin():
             self.obj.status = 'p'
 
         return super().form_valid(form)
+
