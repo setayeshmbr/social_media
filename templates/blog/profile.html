@@ -17,7 +17,7 @@
                     obcaecati non ea, est odit repellat distinctio incidunt, quia aliquam eveniet quod deleniti impedit
                     sapiente atque tenetur porro?</p>
                 {% if user == request.user %}
-                    <a href="#" class="btn btn-outline-white py-2 px-4">Edit
+                    <a href="{% url 'account:profile-update' request.user.user_name%}" class="btn btn-outline-white py-2 px-4">Edit
                         Profile</a>
 
                 {% endif %}
@@ -32,11 +32,11 @@
 
                 <div class="mb-3">
                     <p class="mb-0 font-weight-bold text-white">Follower</p>
-                    <p class="mb-4"><a href="#">12K</a></p>
+                    <p class="mb-4"><a href="#">5</a></p>
                     <p class="mb-0 font-weight-bold text-white">Fallowing</p>
-                    <p class="mb-4"><a href="#">200</a></p>
+                    <p class="mb-4"><a href="#">6</a></p>
                     <p class="mb-0 font-weight-bold text-white">Posts</p>
-                    <p class="mb-4"><a href="#">50</a></p>
+                    <p class="mb-4"><a href="#">4</a></p>
                 </div>
             </div>
 

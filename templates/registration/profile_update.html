@@ -1,10 +1,128 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>hiiiiiiiiiiiiiiiiiiiiii</h1>
-</body>
-</html>
+{% extends 'blog/base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block main %}
+
+    <div class="site-wrap">
+        {% include 'blog/navbar.html' %}
+        <div class="site-mobile-menu">
+            <div class="site-mobile-menu-header">
+                <div class="site-mobile-menu-close mt-3">
+                    <span class="icon-close2 js-menu-toggle"></span>
+                </div>
+            </div>
+            <div class="site-mobile-menu-body"></div>
+        </div>
+
+        <div class="site-section" data-aos="fade">
+            <div class="container">
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-7">
+                        <div class="row mb-5">
+                            <div class="col-12 ">
+                                <h2 class="site-section-heading text-center">Update Profile</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8 mb-5">
+                        <form action="#" enctype="multipart/form-data" >{% csrf_token %}
+
+
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-white" for="fname">First Name</label>
+                                    {% render_field form.first_name|add_class:"form-control font-italic" %}
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-white" for="lname">Last Name</label>
+                                    {% render_field form.last_name|add_class:"form-control font-italic" %}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-white" for="fname">Username</label>
+                                    {% render_field form.user_name|add_class:"form-control font-italic" %}
+
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-white" for="lname">Email</label>
+                                    {% render_field form.email|add_class:"form-control font-italic" %}
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-white" for="fname">phone_number</label>
+                                    {% render_field form.phone_number|add_class:"form-control font-italic" %}
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="text-white" for="subject">website</label>
+                                    {% render_field form.website|add_class:"form-control font-italic" %}
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-white" for="subject">gender</label>
+                                    {% render_field form.gender|add_class:"form-control font-italic" %}
+
+                                </div>
+
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-white" for="fname">image</label>
+                                    {% render_field form.image|add_class:"form-control font-italic" %}
+
+                                </div>
+                            </div>
+                           <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label class="text-white" for="fname">Bio</label>
+                                    {% render_field form.bio|add_class:"form-control font-italic" %}
+
+                                </div>
+                            </div>
+
+
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" value="Send Message"
+                                           class="btn btn-primary py-2 px-4 text-white">
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="footer py-4">
+            <div class="container-fluid text-center">
+                <p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script data-cfasync="false"
+                                            src="{% static 'blog/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+                    <script>document.write(new Date().getFullYear());</script>
+                    All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
+                    <a
+                            href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

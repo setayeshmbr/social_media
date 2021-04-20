@@ -44,7 +44,7 @@ class MyUser(AbstractBaseUser):
     GENDER = [('f', _('Female')), ('m', _('Male'))]
     gender = models.CharField(_('Gender'), max_length=2, choices=GENDER, blank=True, null=True)
     website = models.CharField(_('Website'), blank=True, max_length=150, validators=[validate_website_url])
-
+    bio = models.TextField(_('Bio'), blank=True, max_length=100)
     STATUS_CHOICES = (
         ('p', _('Phone number')),
         ('e', _('Email'))

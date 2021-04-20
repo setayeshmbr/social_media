@@ -4,9 +4,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 # Create your views here.
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
-from apps.account.forms import CustomAuthenticationForm
+from apps.account.forms import CustomAuthenticationForm, ProfileUpdateForm
 from .mixins import FormValidMixin, FieldsMixin
 from .models import MyUser
 from ..blog.models import Post
@@ -114,7 +114,7 @@ def verify(request):
         return HttpResponseRedirect(reverse('register'))
 
 
-class PostList(ListView):
+class Profile(ListView):
     model = Post
     template_name = 'blog/profile.html'
 
@@ -126,7 +126,7 @@ class PostList(ListView):
 
 
     def get_context_data(self, **kwargs):
-        context = super(PostList,self).get_context_data(**kwargs)
+        context = super(Profile,self).get_context_data(**kwargs)
         context['user'] = user
         return context
 
@@ -141,5 +141,25 @@ class PostCreate(FieldsMixin, FormValidMixin, CreateView):
         return reverse_lazy('account:profile', kwargs={"user_name": user_name})
 
 
+class ProfileUpdate(UpdateView):
+    template_name = 'registration/profile_update.html'
+    form_class = ProfileUpdateForm
 
+    def get_object(self, queryset=None):
+        user_name = self.kwargs.get('user_name')
+        return MyUser.objects.get(user_name=user_name)
+
+    def get_form_kwargs(self):
+        kwargs = super(ProfileUpdate, self).get_form_kwargs()
+        kwargs.update(
+            {
+                'user': self.request.user
+            }
+        )
+        return kwargs
+
+    def get_success_url(self):
+        user = self.request.user
+        user_name = user.user_name
+        return reverse_lazy('account:profile', kwargs={'user_name': user_name})
 

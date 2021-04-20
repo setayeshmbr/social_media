@@ -127,6 +127,21 @@ class CustomAuthenticationForm(forms.Form) :
             params={'email' : self.email_field.verbose_name},
         )
 
+class ProfileUpdateForm(forms.ModelForm) :
+
+    def __init__(self, *args, **kwargs) :
+        user = kwargs.pop('user')
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+
+        if not user.is_superuser :
+            self.fields['user_name'].disabled = True
+            self.fields['email'].disabled = False
+
+    class Meta :
+        model = MyUser
+        fields = [
+            'user_name', 'email', 'first_name', 'last_name','phone_number','image','gender','website','bio'
+        ]
 
 
 
