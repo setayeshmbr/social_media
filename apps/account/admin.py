@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from apps.account.forms import UserChangeForm, UserCreationForm
-from apps.account.models import MyUser
+from apps.account.models import MyUser, UserFollowing
 
 
 class UserAdmin(BaseUserAdmin):
@@ -39,3 +39,9 @@ admin.site.register(MyUser, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+
+class UserFollowingAdmin(admin.ModelAdmin):
+    list_display = ['from_user', 'to_user', 'accept', 'created']
+
+
+admin.site.register(UserFollowing, UserFollowingAdmin)

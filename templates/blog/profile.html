@@ -15,9 +15,13 @@
                 <h2 class="text-white font-weight-light mb-4">{{ user.user_name }}</h2>
                 <p class="mb-4">{{ user.bio |safe|striptags }}</p>
                 {% if user == request.user %}
-                    <a href="{% url 'account:profile-update' %}" class="btn btn-outline-white py-2 px-4">Edit
+                    <a href="{% url 'account:profile-update' %}" class="btn btn-primary py-2 px-4">Edit
                         Profile</a>
-
+                {% endif %}
+                {% if not user == request.user %}
+                    {% if not user in request.user.following %}
+                    <a href="#" class="btn btn-primary py-2 px-4">Request</a>
+                        {% endif %}
                 {% endif %}
                 <p class="pt-3">
                     <a href="#" class="pl-0 pr-3"><span class="icon-twitter"></span></a>
@@ -30,11 +34,11 @@
 
                 <div class="mb-3">
                     <p class="mb-0 font-weight-bold text-white">Follower</p>
-                    <p class="mb-4"><a href="#">5</a></p>
+                    <p class="mb-4"><a href="#">{{ user_obj.follower.count }}</a></p>
                     <p class="mb-0 font-weight-bold text-white">Fallowing</p>
-                    <p class="mb-4"><a href="#">6</a></p>
+                    <p class="mb-4"><a href="#">{{ user_obj.following.count }}</a></p>
                     <p class="mb-0 font-weight-bold text-white">Posts</p>
-                    <p class="mb-4"><a href="#">4</a></p>
+                    <p class="mb-4"><a href="#">{{ user.posts.count }}</a></p>
                 </div>
             </div>
 
@@ -53,7 +57,7 @@
                 {#                    </div>#}
                 {#                </div>#}
                 <div class="row" id="lightgallery">
-                    {% for post in object_list %}
+                    {% for post in user_obj.posts %}
                         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 item" data-aos="fade"
                              data-src="{{ post.image.url }}"
                              data-sub-html="<h4>Fading Light</h4><p>{{ post.caption }}</p>">

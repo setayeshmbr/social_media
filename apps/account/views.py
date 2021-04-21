@@ -9,7 +9,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 
 from apps.account.forms import CustomAuthenticationForm, ProfileUpdateForm
 from .mixins import FormValidMixin, FieldsMixin
-from .models import MyUser
+from .models import MyUser, UserFollowing
 from ..blog.models import Post
 
 
@@ -118,12 +118,17 @@ def verify(request):
 class Profile(ListView):
     model = Post
     template_name = 'blog/profile.html'
+    context_object_name = 'user_obj'
 
     def get_queryset(self):
         global user
         user_name = self.kwargs.get('user_name')
         user = get_object_or_404(MyUser, user_name=user_name)
-        return user.posts.all()
+        queryset = {'posts': user.posts.all(),
+                    'follower': UserFollowing.objects.all().filter(to_user=user),
+                    'following': UserFollowing.objects.all().filter(from_user=user)}
+
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super(Profile, self).get_context_data(**kwargs)
@@ -160,3 +165,21 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         user_name = self.object.user_name
         return reverse_lazy('account:profile', kwargs={'user_name': user_name})
+
+
+class FollowingList(ListView):
+    model = UserFollowing
+    template_name = 'blog/following_list.html'
+
+    def get_queryset(self):
+        user = MyUser.objects.get(user_name=self.kwargs.get('user_name'))
+        return user.followings.all()
+
+
+class FollowerList(ListView):
+    model = UserFollowing
+    template_name = 'blog/follower_list.html'
+
+    def get_queryset(self):
+        user = MyUser.objects.get(user_name=self.kwargs.get('user_name'))
+        return user.followers.all()

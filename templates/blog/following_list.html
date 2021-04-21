@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block main %}
+    <div class="site-wrap">
+        {% include 'blog/navbar.html' %}
+
+        <div class="site-section" data-aos="fade">
+            <div class="container">
+                <div class="row justify-content-center">
+
+                    <div class="col-md-7">
+                        <div class="row mb-5">
+                            <div class="col-12 ">
+                                <h2 class="site-section-heading text-center">Followings</h2>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row site-section">
+                    {% for obj in object_list %}
+                        <div class="col-md-6 col-lg-6 col-xl-1 text-center mb-5">
+                            <img src="{{ obj.to_user.image.url }}" alt="Image"
+                                 class="img-fluid w-50 rounded-circle mb-4">
+                            <a href="{% url 'account:profile' obj.to_user.user_name %}">
+
+                                <h2 class="text-white font-weight-light mb-4">{{ obj.to_user.user_name }}</h2>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="footer py-4">
+            <div class="container-fluid text-center">
+                <p>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script data-cfasync="false"
+                                            src="{% static 'blog//cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+                    <script>document.write(new Date().getFullYear());</script>
+                    All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
+                    <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

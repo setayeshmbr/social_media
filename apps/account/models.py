@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
@@ -95,11 +96,35 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
-# class PhoneModel(models.Model):
-#     Mobile = models.IntegerField(blank=False)
-#     isVerified = models.BooleanField(blank=False, default=False)
-#     counter = models.IntegerField(default=0, blank=False)
-#
-#
-#     def __str__(self):
-#         return str(self.Mobile)
+    # @property
+    # def following(self):
+    #     following = []
+    #     for obj in UserFollowing.objects.filter(from_user=self, accept=True):
+    #         following.append(obj.to_user.id)
+    #     following = MyUser.objects.filter(id__in=following)
+    #     return following
+    #
+    # @property
+    # def followers(self):
+    #
+    #     followers = []
+    #     for obj in UserFollowing.objects.filter(to_user=self, accept=True):
+    #         followers.append(obj.from_user.id)
+    #     followers = MyUser.objects.filter(id__in=followers)
+    #     return followers
+
+
+class UserFollowing(models.Model):
+    from_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='followings', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='followers', on_delete=models.CASCADE)
+    accept = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+
+    class Meta:
+        ordering = ['created']
+
+    # def __str__(self):
+    #     return self.from_user.user_name + ' request to  ' + self.to_user.user_name + str(self.accept)
+
+    # def __str__(self):
+    #     f"{self.user_id} follows {self.following_user_id}"
