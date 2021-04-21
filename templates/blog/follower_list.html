@@ -19,7 +19,7 @@
                 <div class="row site-section">
                     {% for obj in object_list %}
 
-                        <div class="col-md-6 col-lg-6 col-xl-1 text-center mb-5">
+                        <div class="col-md-6 col-lg-6 col-xl-2 text-center mb-5">
                             <img src="{{ obj.from_user.image.url }}" alt="Image"
                                  class="img-fluid w-50 rounded-circle mb-4">
                             <a href="{% url 'account:profile' obj.from_user.user_name %}"><h2

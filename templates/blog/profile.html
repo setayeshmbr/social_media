@@ -34,9 +34,9 @@
 
                 <div class="mb-3">
                     <p class="mb-0 font-weight-bold text-white">Follower</p>
-                    <p class="mb-4"><a href="#">{{ user_obj.follower.count }}</a></p>
+                    <p class="mb-4"><a href="{% url 'account:follower_list' user.user_name %}">{{ user_obj.follower.count }}</a></p>
                     <p class="mb-0 font-weight-bold text-white">Fallowing</p>
-                    <p class="mb-4"><a href="#">{{ user_obj.following.count }}</a></p>
+                    <p class="mb-4"><a href="{% url 'account:following_list' user.user_name %}">{{ user_obj.following.count }}</a></p>
                     <p class="mb-0 font-weight-bold text-white">Posts</p>
                     <p class="mb-4"><a href="#">{{ user.posts.count }}</a></p>
                 </div>
