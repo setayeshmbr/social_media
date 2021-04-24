@@ -166,20 +166,3 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
         user_name = self.object.user_name
         return reverse_lazy('account:profile', kwargs={'user_name': user_name})
 
-
-class FollowingList(ListView):
-    model = UserFollowing
-    template_name = 'blog/following_list.html'
-
-    def get_queryset(self):
-        user = MyUser.objects.get(user_name=self.kwargs.get('user_name'))
-        return user.followings.all()
-
-
-class FollowerList(ListView):
-    model = UserFollowing
-    template_name = 'blog/follower_list.html'
-
-    def get_queryset(self):
-        user = MyUser.objects.get(user_name=self.kwargs.get('user_name'))
-        return user.followers.all()
