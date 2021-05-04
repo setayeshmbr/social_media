@@ -48,10 +48,16 @@
                     </p>
                     <p class="mb-0 font-weight-bold text-white">Fallowing</p>
                     <p class="mb-4">
-                        {#                        <a href="{% url 'account:following_list' user.user_name %}">{{ user_obj.following.count }}</a>#}
                         <a data-target="#followingModal" data-toggle="modal"
                            href="#followingModal">{{ user_obj.following.count }}</a>
                     </p>
+                    {% if user == request.user %}
+                        <p class="mb-0 font-weight-bold text-white">Requests</p>
+                        <p class="mb-4">
+                            <a data-target="#requestsModal" data-toggle="modal"
+                               href="#requestsModal">{{ user.requests.count }}</a>
+                        </p>
+                    {% endif %}
                     <p class="mb-0 font-weight-bold text-white">Posts</p>
                     <p class="mb-4"><a href="#">{{ user.posts.count }}</a></p>
                 </div>
@@ -105,6 +111,38 @@
                                 <a href="{% url 'account:profile' obj.to_user.user_name %}">
                                     <h2 class="text-black font-weight-light mb-4">{{ obj.to_user.user_name }}</h2>
                                 </a>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Modal req -->
+        <div class="modal fade " id="requestsModal" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Followers</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body text-center ">
+                        {% for obj in user_obj.requests %}
+                            <div >
+                                <img src="{{ obj.from_user.image.url }}" alt="Image"
+                                     class="img-fluid w-25 rounded-circle mb-4">
+                                <a href="{% url 'account:profile' obj.from_user.user_name %}">
+                                    <h2 class="text-black font-weight-light mb-4">{{ obj.from_user.user_name }}</h2>
+                                </a>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary"><a class="text-black" href="{% url 'account:request-confirm' obj.from_user.user_name%}">Accept</a></button>
+                                <button class="btn btn-danger"><a class="text-black" href="{% url 'account:request-delete' obj.from_user.user_name %}">Delete</a></button>
                             </div>
 
                         {% endfor %}

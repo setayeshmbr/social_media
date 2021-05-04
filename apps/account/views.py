@@ -126,8 +126,9 @@ class Profile(ListView):
         user_name = self.kwargs.get('user_name')
         user = get_object_or_404(MyUser, user_name=user_name)
         queryset = {'posts': user.posts.all(),
-                    'follower': UserFollowing.objects.all().filter(to_user=user),
-                    'following': UserFollowing.objects.all().filter(from_user=user)}
+                    'follower': UserFollowing.objects.all().filter(to_user=user , accept=True),
+                    'following': UserFollowing.objects.all().filter(from_user=user , accept=True),
+                    'requests': UserFollowing.objects.all().filter(to_user=user, accept=False)}
 
         return queryset
 
@@ -171,8 +172,8 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
 class Request(LoginRequiredMixin, View):
     def get(self, request, user_name):
         user = self.request.user
-        followed = get_object_or_404(MyUser, user_name = user_name)
-        if UserFollowing.objects.filter(from_user= user, to_user=followed.pk).count() == 0:
+        followed = get_object_or_404(MyUser, user_name=user_name)
+        if UserFollowing.objects.filter(from_user=user, to_user=followed.pk).count() == 0:
             req = UserFollowing(from_user=user, to_user=followed, accept=False)
             req.save()
         else:
@@ -180,3 +181,23 @@ class Request(LoginRequiredMixin, View):
             req.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
+
+class RequestConfirm(LoginRequiredMixin, View):
+    def get(self, request, user_name):
+        user = self.request.user
+        requested = get_object_or_404(MyUser, user_name=user_name)
+        req = UserFollowing.objects.get(from_user=requested, to_user=user , accept=False)
+        req.delete()
+
+        req = UserFollowing(from_user=requested, to_user=user, accept=True)
+        req.save()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class RequestDelete(LoginRequiredMixin, View):
+    def get(self, request, user_name):
+        user = self.request.user
+        requested = get_object_or_404(MyUser, user_name=user_name)
+        req = UserFollowing.objects.get(from_user=requested, to_user=user)
+        req.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

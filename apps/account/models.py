@@ -121,6 +121,15 @@ class MyUser(AbstractBaseUser):
         requested = MyUser.objects.filter(id__in=requested)
         return requested
 
+    @property
+    def requests(self):
+        requests = []
+        for obj in UserFollowing.objects.filter(to_user=self, accept=False):
+            requests.append(obj.from_user.id)
+        requests = MyUser.objects.filter(id__in=requests)
+        return requests
+
+
 
 class UserFollowing(models.Model):
     from_user = models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='followings', on_delete=models.CASCADE)
