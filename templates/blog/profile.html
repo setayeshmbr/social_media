@@ -19,8 +19,16 @@
                         Profile</a>
                 {% endif %}
                 {% if not user == request.user %}
-                    {% if not user in request.user.following %}
-                        <a href="#" class="btn btn-primary py-2 px-4">Request</a>
+                    {% if user in request.user.following %}
+                        <a href="{% url 'account:request' user.user_name %}"
+                           class="btn btn-primary py-2 px-4">UnFollow</a>
+                    {% else %}
+                        {% if user in request.user.requested %}
+                            <a href="{% url 'account:request' user.user_name %}" class="btn btn-primary py-2 px-4">Cancel</a>
+                        {% else %}
+                            <a href="{% url 'account:request' user.user_name %}"
+                               class="btn btn-primary py-2 px-4">Request</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
                 <p class="pt-3">

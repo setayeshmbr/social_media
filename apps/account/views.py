@@ -2,9 +2,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 # Create your views here.
+from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView
 
 from apps.account.forms import CustomAuthenticationForm, ProfileUpdateForm
@@ -165,4 +166,17 @@ class ProfileUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         user_name = self.object.user_name
         return reverse_lazy('account:profile', kwargs={'user_name': user_name})
+
+
+class Request(LoginRequiredMixin, View):
+    def get(self, request, user_name):
+        user = self.request.user
+        followed = get_object_or_404(MyUser, user_name = user_name)
+        if UserFollowing.objects.filter(from_user= user, to_user=followed.pk).count() == 0:
+            req = UserFollowing(from_user=user, to_user=followed, accept=False)
+            req.save()
+        else:
+            req = UserFollowing.objects.get(from_user=user, to_user=followed)
+            req.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 

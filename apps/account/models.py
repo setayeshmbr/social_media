@@ -96,22 +96,30 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
-    # @property
-    # def following(self):
-    #     following = []
-    #     for obj in UserFollowing.objects.filter(from_user=self, accept=True):
-    #         following.append(obj.to_user.id)
-    #     following = MyUser.objects.filter(id__in=following)
-    #     return following
-    #
-    # @property
-    # def followers(self):
-    #
-    #     followers = []
-    #     for obj in UserFollowing.objects.filter(to_user=self, accept=True):
-    #         followers.append(obj.from_user.id)
-    #     followers = MyUser.objects.filter(id__in=followers)
-    #     return followers
+    @property
+    def following(self):
+        following = []
+        for obj in UserFollowing.objects.filter(from_user=self, accept=True):
+            following.append(obj.to_user.id)
+        following = MyUser.objects.filter(id__in=following)
+        return following
+
+    @property
+    def followers(self):
+
+        followers = []
+        for obj in UserFollowing.objects.filter(to_user=self, accept=True):
+            followers.append(obj.from_user.id)
+        followers = MyUser.objects.filter(id__in=followers)
+        return followers
+
+    @property
+    def requested(self):
+        requested = []
+        for obj in UserFollowing.objects.filter(from_user=self, accept=False):
+            requested.append(obj.to_user.id)
+        requested = MyUser.objects.filter(id__in=requested)
+        return requested
 
 
 class UserFollowing(models.Model):
