@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     # my apps
     'apps.account.apps.AccountConfig',
     'apps.blog.apps.BlogConfig',
+    'apps.comment.apps.CommentConfig',
     'widget_tweaks',
     'rest_framework',
     'easy_thumbnails',
@@ -153,3 +154,4 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #
 Kavenegar_API = config('Kavenegar_API')
+

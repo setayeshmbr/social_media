@@ -1,47 +1,120 @@
 {% extends 'blog/base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block main %}
-  <div class="site-wrap">
-  {% include 'blog/navbar.html' %}
+    <div class="site-wrap">
+        {% include 'blog/navbar.html' %}
 
-    <div class="site-section"  data-aos="fade">
-      <div class="container-fluid">
+        <div class="site-section" data-aos="fade">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="row mb-5">
+                            <div class="col-12 ">
+                                <h2 class="site-section-heading text-center">{{ object.title }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="row justify-content-center">
+                <div class="row mb-5">
+                    <div class="col-md-7">
+                        <img src="{{ object.image.url }}" alt="Images" class="img-fluid">
+                    </div>
+                    <div class="col-md-4 ml-auto">
+                        <p class="text-white">{{ object.caption }}</p>
+                    </div>
+                </div>
 
-          <div class="col-md-7">
-            <div class="row mb-5">
-              <div class="col-12 ">
-                <h2 class="site-section-heading text-center">{{ object.title }}</h2>
-              </div>
             </div>
-          </div>
+
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-7">
+                        <div class="row mb-5">
+                            <div class="col-12 ">
+                                <h2 class="site-section-heading text-center">Comment</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8 mb-5">
+                        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-white" for="body">Body</label>
+                                    {% render_field form.body|add_class:"form-control font-italic" %}
+                                </div>
+                            </div>
+                            {% if form.body.errors %}
+                                {% for error in form.body.errors %}
+                                    <div class="row-form-errors">
+                                        <p>{{ error }}</p>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="reset" class="btn btn-primary py-2 px-4 text-white">
+                                    <button class="btn btn-primary py-2 px-4 text-white">comment
+                                        as {{ request.user.user_name }}...
+                                    </button>
+                                </div>
+                            </div>
+
+                            {% if form.non_field_errors %}
+                                <div>
+                                    {% for errors in form.non_field_errors %}
+                                        <span>{{ errors }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% for comment in comments %}
+                <div class="container mt-5" style="border: 1px solid #FFFFFF">
+                    <div class="row">
+                        <div class="comments" style="padding: 10px;">
+                            <div>
+                                <p class="font-weight-bold">
+                                    <img src="{{ comment.user.image.url }}" alt="Image"
+                                         class="img-fluid rounded-circle mb-4 mr-3" style="width: 50px; height:50px;">
+                                    <span class=" text-white font-weight-bold">{{ comment.user.user_name }}  </span>|
+                                    <span class=" text-muted font-weight-normal">{{ comment.created_on }}</span>
+                                </p>
+                            </div>
+                            <p>{{ comment.body | linebreaks }}</p>
+                            <p id='show'></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
 
         </div>
-
-        <div class="row mb-5">
-          <div class="col-md-7">
-            <img src="{{ object.image.url }}" alt="Images" class="img-fluid">
-          </div>
-          <div class="col-md-4 ml-auto">
-            <h3 class="text-white">{{ object.title }}</h3>
-              <p class="text-white">{{ object.caption }}</p>
-          </div>
-        </div>
-
-      </div>
     </div>
 
     <div class="footer py-4">
-      <div class="container-fluid text-center">
-        <p>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          Copyright &copy;<script data-cfasync="false" src="{% static 'blog//cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" >Colorlib</a>
-          <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-        </p>
-      </div>
+        <div class="container-fluid text-center">
+            <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script data-cfasync="false"
+                                        src="{% static 'blog//cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script>
+                <script>document.write(new Date().getFullYear());</script>
+                All rights reserved | This template is made with <i class="icon-heart-o" aria-hidden="true"></i> by
+                <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+        </div>
     </div>
 
+    </div>
+    <script>
 
-  </div>
+    </script>
 {% endblock %}

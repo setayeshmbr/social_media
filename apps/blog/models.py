@@ -34,6 +34,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(_('Title'),max_length=30,blank=True)
+    slug = AutoSlugField(populate_from=['title'], unique=True, allow_unicode=True, slugify_function=slugify_function)
     image = models.ImageField(_('Image'), upload_to='uploaded_images')
     # size is "width x height"
     cropping = ImageRatioField('image', '900 x 750',size_warning=True)

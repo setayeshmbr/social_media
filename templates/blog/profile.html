@@ -172,7 +172,7 @@
                         <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 item" data-aos="fade"
                              data-src="{{ post.image.url }}"
                              data-sub-html="<h4>Fading Light</h4><p>{{ post.caption }}</p>">
-                            <a href="{% url 'blog:post_detail' post.pk %}"><img src="{{ post.thumbnail_url }}"
+                            <a href="{% url 'blog:post_detail' post.slug %}"><img src="{{ post.thumbnail_url }}"
                                                                                 alt="IMage" class="img-fluid"></a>
                         </div>
 
