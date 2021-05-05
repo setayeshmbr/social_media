@@ -1,20 +1,15 @@
 # Create your views here.
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView
-
-from apps.blog.models import Post, Category
-
-# class PostDetail(DetailView):
-#     def get_object(self, queryset=None) :
-#         pk = self.kwargs.get('pk')
-#         return get_object_or_404(Post.objects.all(), pk=pk)
-
-from .models import Post
-from apps.comment.forms import CommentForm
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView
+
+from apps.blog.models import Category
+from apps.comment.forms import CommentForm
+from .models import Post
 
 
+@login_required
 def post_detail(request, slug):
     template_name = 'blog/post_detail.html'
     post = get_object_or_404(Post, slug=slug)
