@@ -67,5 +67,8 @@ class Post(models.Model):
         )
         return thumbnail_url
 
+    def __str__(self):
+        return self.title
+
 
 
