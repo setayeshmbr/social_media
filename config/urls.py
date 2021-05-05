@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from apps.account.views import Login, Register, activate, verify
 
@@ -28,6 +28,8 @@ urlpatterns = [
     path('', include('apps.account.urls')),
     path('', include('apps.blog.urls')),
     path('', include('django.contrib.auth.urls')),
+
+    re_path(r'^ratings/', include('star_ratings.urls', namespace='ratings')),
 ]
 
 from django.conf import settings

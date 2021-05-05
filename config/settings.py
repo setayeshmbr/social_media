@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'easy_thumbnails',
     'image_cropping',
+    'star_ratings',
 ]
 
 from easy_thumbnails.conf import Settings as thumbnail_settings
@@ -154,4 +155,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #
 Kavenegar_API = config('Kavenegar_API')
-

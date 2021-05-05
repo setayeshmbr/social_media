@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
+{% load ratings %}
 {% block main %}
     <div class="site-wrap">
         {% include 'blog/navbar.html' %}
@@ -12,6 +13,7 @@
                         <div class="row mb-5">
                             <div class="col-12 ">
                                 <h2 class="site-section-heading text-center">{{ object.title }}</h2>
+
                             </div>
                         </div>
                     </div>
@@ -23,29 +25,24 @@
                     </div>
                     <div class="col-md-4 ml-auto">
                         <p class="text-white">{{ object.caption }}</p>
+                        <div>{% ratings object %}</div>
                     </div>
+
+
+
                 </div>
 
             </div>
 
             <div class="container mt-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-7">
-                        <div class="row mb-5">
-                            <div class="col-12 ">
-                                <h2 class="site-section-heading text-center">Comment</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="row">
                     <div class="col-lg-8 mb-5">
                         <form method="post" enctype="multipart/form-data">{% csrf_token %}
 
                             <div class="row form-group">
-                                <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="text-white" for="body">Body</label>
+                                <div class="col-md-12 mb-3 mb-md-0" style="margin-top: 200px">
+                                    <label class="text-white" for="body">Comment</label>
                                     {% render_field form.body|add_class:"form-control font-italic" %}
                                 </div>
                             </div>
