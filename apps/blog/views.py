@@ -27,6 +27,9 @@ def post_detail(request, slug):
 
             new_comment.save()
     else:
+        ip_address = request.user.ip_address
+        if ip_address not in post.hits.all():
+            post.hits.add(ip_address)
         comment_form = CommentForm()
 
     return render(request, template_name, {'object': post,
