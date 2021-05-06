@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
 # Create your views here.
 from django.views import View
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from apps.account.forms import CustomAuthenticationForm, ProfileUpdateForm
 from .mixins import FormValidMixin, FieldsMixin
@@ -201,3 +201,21 @@ class RequestDelete(LoginRequiredMixin, View):
         req = UserFollowing.objects.get(from_user=requested, to_user=user)
         req.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+
+class PostUpdate(FieldsMixin, FormValidMixin, UpdateView) :
+    model = Post
+    template_name = 'blog/post_create_update.html'
+
+    def get_success_url(self):
+        user = self.request.user
+        return reverse_lazy('account:profile', kwargs={'user_name': user.user_name})
+
+
+class PostDelete(DeleteView) :
+    model = Post
+    success_url = reverse_lazy('blog:home')
+    template_name = 'registration/post_confirm_delete.html'
+    def get_success_url(self):
+        user = self.request.user
+        return reverse_lazy('account:profile' , kwargs = {'user_name' : user.user_name})

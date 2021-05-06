@@ -1,0 +1,6 @@
+<form method="post">{% csrf_token %}
+    <p py-2>
+        Are you sure you want to delete {{ object }} from {{ object.user.user_name }}
+    </p>
+    <input type="submit" value="Delete">
+</form>
