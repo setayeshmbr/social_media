@@ -9,7 +9,7 @@ from django.views import View
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
 
 from apps.account.forms import CustomAuthenticationForm, ProfileUpdateForm
-from .mixins import FormValidMixin, FieldsMixin
+from .mixins import FormValidMixin, FieldsMixin, PostUpdateFieldsMixin
 from .models import MyUser, UserFollowing
 from ..blog.models import Post
 
@@ -203,7 +203,7 @@ class RequestDelete(LoginRequiredMixin, View):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
-class PostUpdate(FieldsMixin, FormValidMixin, UpdateView) :
+class PostUpdate(FieldsMixin, PostUpdateFieldsMixin, UpdateView) :
     model = Post
     template_name = 'blog/post_create_update.html'
 
@@ -214,7 +214,6 @@ class PostUpdate(FieldsMixin, FormValidMixin, UpdateView) :
 
 class PostDelete(DeleteView) :
     model = Post
-    success_url = reverse_lazy('blog:home')
     template_name = 'registration/post_confirm_delete.html'
     def get_success_url(self):
         user = self.request.user

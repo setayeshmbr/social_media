@@ -90,8 +90,8 @@
                             <p>{{ comment.body | linebreaks }}</p>
                             <p id='show'></p>
                             <div>
-                                <button class="btn btn-outline-white"><a href="#">Edit</a></button>
-                                <button class="btn btn-outline-white"><a href="#">Delete</a></button>
+                                <a href="#"><button>Edit</button>
+                                <a href="{% url 'comment:comment-delete' comment.pk %}"><button>Delete</button>
 
                             </div>
                         </div>

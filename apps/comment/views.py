@@ -9,8 +9,6 @@ class DeleteComment(DeleteView):
     model = Comment
 
     def get_success_url(self, **kwargs):
-        comment = get_object_or_404(Comment, pk=self.kwargs['pk'])
-        slug = kwargs.get('slug')
-        return reverse_lazy('blog:post_detail', kwargs={'slug' : slug})
+        return reverse_lazy('blog:home')
 
 
