@@ -3,7 +3,7 @@ from django.contrib import admin
 # Register your models here.
 from image_cropping import ImageCroppingMixin
 
-from apps.blog.models import Post, Category, IPAddress
+from apps.blog.models import Post, Category, IPAddress, PostHit
 
 
 class PostAdmin(admin.ModelAdmin, ImageCroppingMixin):
@@ -19,3 +19,5 @@ class CategoryAdmin(admin.ModelAdmin, ImageCroppingMixin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(IPAddress)
+admin.site.register(PostHit)
+

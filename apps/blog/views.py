@@ -1,9 +1,10 @@
 # Create your views here.
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count, Q
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
-
+from datetime import datetime , timedelta
 from apps.blog.models import Category
 from apps.comment.forms import CommentForm
 from .models import Post
@@ -56,3 +57,10 @@ class CategoryDetail(ListView):
         context = super(CategoryDetail, self).get_context_data(**kwargs)
         context['category'] = category
         return context
+
+
+class PostHitsList(ListView):
+    last_month = datetime.today() - timedelta(days=30)
+    model = Post
+    template_name = 'blog/post_hits_list.html'
+    queryset = Post.objects.annotate(count=Count('hits' , filter= Q(posthit__created__gt = last_month))).order_by('-count','-created')

@@ -35,6 +35,9 @@ class Category(models.Model):
         )
         return thumbnail_url
 
+    def __str__(self):
+        return self.title
+
 
 class IPAddress(models.Model):
     ip_address = models.GenericIPAddressField(verbose_name='IP Address')
@@ -88,3 +91,6 @@ class PostHit(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     ip_address = models.ForeignKey(IPAddress, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return  '({}) viewed post : {}'.format(self.ip_address, self.post.title)

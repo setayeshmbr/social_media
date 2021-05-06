@@ -18,6 +18,11 @@ class SaveIPAddressMiddleware:
             ip_address = IPAddress(ip_address=ip)
             ip_address.save()
 
+        # for generating fake ip address
+        # for i in range(100):
+        #     ip_address = IPAddress(ip_address='192.168.1.1{}'.format(i))
+        #     ip_address.save()
+
         request.user.ip_address = ip_address
 
         response = self.get_response(request)
