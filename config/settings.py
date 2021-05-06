@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'apps.blog.apps.BlogConfig',
     'apps.comment.apps.CommentConfig',
     'widget_tweaks',
-    'rest_framework',
     'easy_thumbnails',
     'image_cropping',
     'star_ratings',
