@@ -61,7 +61,7 @@ class Post(models.Model):
     status = models.CharField(_('Publish status'), max_length=2, choices=STATUS_CHOICES, blank=True, default='p')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='posts', null=True)
     category = models.ManyToManyField(Category, verbose_name=_('Category'), related_name='posts', blank=True, null=True)
-    hits = models.ManyToManyField(IPAddress, blank=True, related_name='hits', verbose_name='views')
+    hits = models.ManyToManyField(IPAddress, through='PostHit', blank=True, related_name='hits', verbose_name='views')
 
     def img_tag(self):
         return format_html("<img width=100 height=75 style='border-radius : 5px;' src ='{}'> ".format(self.image.url))
@@ -82,3 +82,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class PostHit(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    ip_address = models.ForeignKey(IPAddress, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
