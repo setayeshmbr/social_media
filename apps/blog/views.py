@@ -2,18 +2,32 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
-from datetime import datetime , timedelta
+from datetime import datetime, timedelta
 from apps.blog.models import Category
 from apps.comment.forms import CommentForm
 from .models import Post
+from django.core.cache import cache
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
+from django.conf import settings
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 
 @login_required
 def post_detail(request, slug):
     template_name = 'blog/post_detail.html'
-    post = get_object_or_404(Post, slug=slug)
+
+    if cache.get(slug):
+        post = cache.get(slug)
+    else:
+        try:
+            post = get_object_or_404(Post, slug=slug)
+            cache.set(slug, post)
+        except Post.DoesNotExist:
+            return redirect('/')
+
     comments = post.comments.filter(active=True)
     new_comment = None
 
@@ -63,4 +77,5 @@ class PostHitsList(ListView):
     last_month = datetime.today() - timedelta(days=30)
     model = Post
     template_name = 'blog/post_hits_list.html'
-    queryset = Post.objects.annotate(count=Count('hits' , filter= Q(posthit__created__gt = last_month))).order_by('-count','-created')
+    queryset = Post.objects.annotate(count=Count('hits', filter=Q(posthit__created__gt=last_month))).order_by('-count',
+                                                                                                              '-created')
