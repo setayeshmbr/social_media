@@ -41,8 +41,14 @@
 
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
-                                    <label class="text-white" for="caption">location</label>
+                                    <label class="text-white" for="Location">Location</label>
                                     {% render_field form.location|add_class:"form-control font-italic" %}
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="text-white" for="Category">Category</label>
+                                    {% render_field form.category|add_class:"form-control font-italic"%}
                                 </div>
                             </div>
                             <div class="row form-group">

@@ -43,14 +43,14 @@
                 <div class="mb-3">
                     <p class="mb-0 font-weight-bold text-white">Follower</p>
                     <p class="mb-4">
-                        <a data-target="{% if user in request.user.following %}#followerModal{% else %}#{% endif %}" data-toggle="modal"
+                        <a data-target="{% if user in request.user.following or user == request.user %}#followerModal{% else %}#{% endif %}" data-toggle="modal"
                            href="{% if user in request.user.following %}#followerModal{% else %}#{% endif %}">
                             {{ user_obj.follower.count }}
                         </a>
                     </p>
                     <p class="mb-0 font-weight-bold text-white">Fallowing</p>
                     <p class="mb-4">
-                        <a data-target="{% if user in request.user.following %}#followingModal{% else %}#{% endif %}" data-toggle="modal"
+                        <a data-target="{% if user in request.user.following  or user == request.user%}#followingModal{% else %}#{% endif %}" data-toggle="modal"
                            href="{% if user in request.user.following %}#followingModal{% else %}#{% endif %}" data-toggle="modal">{{ user_obj.following.count }}</a>
                     </p>
                     {% if user == request.user %}

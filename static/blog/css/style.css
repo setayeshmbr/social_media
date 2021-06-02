@@ -1,6 +1,6 @@
 /* custom */
 .form-control>option{
-  color: black;
+  color: white!important;
 }
 .icon-menu:before {
   color: white!important;
