@@ -10,6 +10,7 @@ __pycache__/
 media/
 # pycharm .idea
 *.idea
+*.DS_Store
 
 
 # Distribution / packaging
